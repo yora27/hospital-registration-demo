@@ -1,0 +1,106 @@
+﻿<!-- AdminWindow.xaml -->
+<Window x:Class="Hosreg1.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Панель адміністратора" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхня панель -->
+        <Border Grid.Row="0" Background="#2c3e50" Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Панель адміністратора" 
+                          Foreground="White" 
+                          FontSize="16" 
+                          VerticalAlignment="Center"/>
+                <Button Content="Вийти" 
+                        Margin="20,0,0,0" 
+                        Click="LogoutButton_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Основний контент -->
+        <TabControl Grid.Row="1" Margin="5">
+            <!-- Управління пацієнтами -->
+            <TabItem Header="Пацієнти">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="Додати пацієнта" 
+                                Margin="0,0,10,0"
+                                Click="AddPatient_Click"/>
+                        <Button Content="Видалити вибраного" 
+                                Click="DeletePatient_Click"/>
+                        <Button Content="Редагувати" Click="EditPatient_Click" Margin="0,0,10,0"/>
+                        <Button Content="Новий запис" Click="AddAppointment_Click" Margin="0,0,10,0"/>
+
+                    </StackPanel>
+
+                    <ListView x:Name="PatientsList" Grid.Row="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ПІБ" Width="200"/>
+                                <GridViewColumn Header="Дата народження" Width="120"/>
+                                <GridViewColumn Header="Адреса" Width="200"/>
+                                <GridViewColumn Header="Телефон" Width="150"/>
+                                <GridViewColumn Header="Статус" Width="100"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+            <!-- Управління записами -->
+            <TabItem Header="Записи">
+                <Grid Margin="10">
+                    <ListView x:Name="AllAppointmentsList">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Дата" Width="100"/>
+                                <GridViewColumn Header="Час" Width="100"/>
+                                <GridViewColumn Header="Пацієнт" Width="200"/>
+                                <GridViewColumn Header="Лікар" Width="200"/>
+                                <GridViewColumn Header="Статус" Width="100"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+            <!-- Статистика -->
+            <TabItem Header="Статистика">
+                <Grid Margin="10">
+                    <StackPanel>
+                        <TextBlock Text="Загальна статистика" 
+                     FontSize="20" 
+                     Margin="0,0,0,20"
+                     Foreground="Black"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Всього пацієнтів: " 
+                         Foreground="Black"/>
+                            <TextBlock x:Name="TotalPatientsCount" 
+                         Margin="5,0"
+                         Foreground="Black"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Записів на сьогодні: " 
+                         Foreground="Black"/>
+                            <TextBlock x:Name="TodayAppointmentsCount" 
+                         Margin="5,0"
+                         Foreground="Black"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,68 @@
+﻿<Window x:Class="Hosreg1.DoctorReviewsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Відгуки про лікарів" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Перегляд відгуків про лікарів"
+                     FontSize="24"
+                     FontWeight="SemiBold"
+                     Margin="0,0,0,10"/>
+
+            <ComboBox x:Name="DoctorsComboBox"
+                     DisplayMemberPath="Name"
+                     SelectionChanged="DoctorsComboBox_SelectionChanged"
+                     Margin="0,0,0,10"/>
+        </StackPanel>
+
+        <ListView x:Name="ReviewsListView" 
+                 Grid.Row="1"
+                 Background="White"
+                 BorderThickness="1"
+                 Margin="0,0,0,20">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Дата" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Date, StringFormat={}{0:dd.MM.yyyy HH:mm}}"
+                                         Margin="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Пацієнт" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Patient.Name}"
+                                         Margin="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Відгук" Width="400">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Comment}"
+                                         Margin="5"
+                                         TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Grid.Row="2"
+                Content="Назад"
+                HorizontalAlignment="Right"
+                Click="BackButton_Click"/>
+    </Grid>
+</Window>

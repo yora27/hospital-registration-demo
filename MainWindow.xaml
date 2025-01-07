@@ -1,0 +1,144 @@
+﻿<Window x:Class="LoginApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вхід до системи" Height="500" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#f8f9fa">
+
+    <Window.Resources>
+        <!-- Стилі для текстових полів -->
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#dee2e6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стилі для PasswordBox -->
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#dee2e6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стилі для кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="20,8"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="#4361ee"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3046c9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White" 
+        CornerRadius="10" 
+        Margin="20">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" 
+                        Direction="-90" 
+                        RenderingBias="Quality" 
+                        ShadowDepth="2" 
+                        Opacity="0.2"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Верхня панель -->
+            <Border Grid.Row="0" 
+                    Background="#4361ee" 
+                    CornerRadius="10,10,0,0">
+                <TextBlock Text="Вхід до системи" 
+                         Foreground="White"
+                         FontSize="24" 
+                         FontWeight="SemiBold"
+                         Margin="20"
+                         HorizontalAlignment="Left"/>
+            </Border>
+
+            <!-- Форма входу -->
+            <StackPanel Grid.Row="1" 
+                      Margin="30,20">
+                <TextBlock Text="Логін" 
+                         Foreground="#495057"
+                         FontSize="20"
+                         Margin="5,5,5,0"/>
+                <TextBox x:Name="txtUsername"
+                        Margin="5,5,5,15" TextChanged="txtUsername_TextChanged" Height="70"/>
+
+                <TextBlock Text="Пароль" 
+                         Foreground="#495057"
+                         FontSize="20"
+                         Margin="5,5,5,0"/>
+                <PasswordBox x:Name="txtPassword"
+                           Margin="2,2,2,2" Height="70"/>
+
+                <Button x:Name="btnLogin" 
+                        Content="Увійти"
+                        Click="btnLogin_Click"/>
+
+                <TextBlock x:Name="txtError"
+                         Foreground="#dc3545"
+                         HorizontalAlignment="Center"
+                         Margin="0,10"
+                         TextWrapping="Wrap"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

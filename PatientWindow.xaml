@@ -1,0 +1,307 @@
+﻿<Window x:Class="Hosreg1.PatientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hosreg1"
+        mc:Ignorable="d"
+        Title="Кабінет пацієнта" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Hosreg1;component/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхня панель з інформацією про користувача -->
+        <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}" Padding="15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock x:Name="txtUserName" 
+                              Text="Ім'я пацієнта" 
+                              Foreground="White" 
+                              FontSize="18" 
+                              FontWeight="SemiBold"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="Вийти" 
+                        Background="{StaticResource PrimaryDarkBrush}"
+                        Click="LogoutButton_Click"/>
+                <Button
+                    
+        Content="Відгуки про лікарів" 
+        Background="{StaticResource PrimaryDarkBrush}"
+        Margin="528,5,50,5"
+        Click="ShowDoctorReviews_Click"/>
+            </Grid>
+
+        </Border>
+
+        <!-- Основний контент -->
+        <TabControl Grid.Row="1" Margin="10" Background="Transparent" BorderThickness="0">
+            <!-- Профіль -->
+            <TabItem Header="Мій профіль">
+                <Border Background="White" 
+                        CornerRadius="10" 
+                        Padding="20" 
+                        Height="444">
+                    <StackPanel>
+                        <TextBlock Text="Особисті дані" 
+                                 FontSize="24" 
+                                 FontWeight="SemiBold" 
+                                 Margin="0,0,0,20"
+                                 Foreground="{StaticResource TextDarkBrush}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="ПІБ:" 
+                                     Grid.Row="0" 
+                                     Grid.Column="0"
+                                     Foreground="{StaticResource TextMutedBrush}"
+                                     VerticalAlignment="Center"/>
+                            <TextBox x:Name="txtFullName" 
+                                    Grid.Row="0" 
+                                    Grid.Column="1" 
+                                    ToolTip="Введіть ваше повне ім'я"/>
+
+                            <TextBlock Text="Дата народження:" 
+                                     Grid.Row="1" 
+                                     Grid.Column="0"
+                                     Foreground="{StaticResource TextMutedBrush}"
+                                     VerticalAlignment="Center"/>
+                            <DatePicker x:Name="dateBirth" 
+                                      Grid.Row="1" 
+                                      Grid.Column="1" 
+                                      Margin="5"
+                                      ToolTip="Оберіть вашу дату народження"/>
+
+                            <TextBlock Text="Телефон:" 
+                                     Grid.Row="2" 
+                                     Grid.Column="0"
+                                     Foreground="{StaticResource TextMutedBrush}"
+                                     VerticalAlignment="Center"/>
+                            <TextBox x:Name="txtPhone" 
+                                    Grid.Row="2" 
+                                    Grid.Column="1"
+                                    ToolTip="Введіть ваш контактний телефон"/>
+
+                            <Button Content="Зберегти зміни" 
+                                    Grid.Row="3" 
+                                    Grid.Column="1" 
+                                    HorizontalAlignment="Right"
+                                    Margin="5,15,5,5"
+                                    Click="SaveProfile_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </TabItem>
+
+            <!-- Записи -->
+            <TabItem Header="Мої записи">
+                <Border Background="White" 
+            CornerRadius="10" 
+            Padding="20" 
+            Margin="0,10,0,0">
+                    <ListView x:Name="AppointmentsList" 
+                 Background="Transparent"
+                 BorderThickness="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Дата" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DateTime, StringFormat={}{0:dd.MM.yyyy}}" 
+                                         Foreground="Black"
+                                         Margin="5" 
+                                         VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Час" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DateTime, StringFormat={}{0:HH:mm}}" 
+                                         Foreground="Black"
+                                         Margin="5" 
+                                         VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Лікар" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Doctor.Name}" 
+                                         Foreground="Black"
+                                         Margin="5" 
+                                         VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Статус" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Status}" 
+                                         Foreground="Black"
+                                         Margin="5" 
+                                         VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+            </TabItem>
+            
+            <!-- Новий запис -->
+            <TabItem Header="Записатися на прийом">
+                <Border Background="White" 
+                        CornerRadius="10" 
+                        Padding="20" 
+                        Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Запис на прийом до лікаря"
+                                 FontSize="24"
+                                 FontWeight="SemiBold"
+                                 Margin="5,0,5,20"
+                                 Foreground="{StaticResource TextDarkBrush}"/>
+
+                        <ComboBox x:Name="DoctorsList" 
+                                Margin="5,5,5,15"
+                                DisplayMemberPath="Name"
+                                SelectionChanged="DoctorsList_SelectionChanged"/>
+
+                        <TextBlock Text="Оберіть зручну дату"
+                                 Margin="5,0,5,5"
+                                 Foreground="{StaticResource TextMutedBrush}"/>
+
+                        <DatePicker x:Name="AppointmentDate" 
+                                  Margin="5,0,5,15"
+                                  SelectedDateChanged="AppointmentDate_SelectedDateChanged"/>
+
+                        <TextBlock Text="Оберіть доступний час прийому"
+                                 Margin="5,0,5,5"
+                                 Foreground="{StaticResource TextMutedBrush}"/>
+
+                        <ComboBox x:Name="TimeSlotsList" 
+                                Margin="5,0,5,20" 
+                                DisplayMemberPath="DisplayText"/>
+
+                        <Button Content="Підтвердити запис" 
+                                Margin="5"
+                                Click="MakeAppointment_Click"
+                                HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Border>
+            </TabItem>
+
+            <!-- Відгуки -->
+            <TabItem Header="Мої відгуки">
+                <Border Background="White" 
+                        CornerRadius="10" 
+                        Padding="20" 
+                        Margin="0,10,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Історія відгуків"
+                                 FontSize="24"
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,0,15"
+                                 Foreground="{StaticResource TextDarkBrush}"/>
+
+                        <ListView x:Name="ReviewsList" 
+                                Grid.Row="1"
+                                Margin="0,0,0,15"
+                                Background="Transparent"
+                                BorderThickness="0">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Дата" Width="120">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Date, StringFormat={}{0:dd.MM.yyyy HH:mm}}"
+                                                         Margin="5"
+                                                         VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Лікар" Width="200">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Doctor.Name}"
+                                                         Margin="5"
+                                                         VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Відгук" Width="400">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Comment}"
+                                                         Margin="5"
+                                                         TextWrapping="Wrap"
+                                                         VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <StackPanel Grid.Row="2">
+                            <TextBlock Text="Додати новий відгук"
+                                     FontSize="18"
+                                     FontWeight="SemiBold"
+                                     Margin="0,0,0,10"
+                                     Foreground="{StaticResource TextDarkBrush}"/>
+                            <ComboBox x:Name="ReviewDoctorsList"
+                                    DisplayMemberPath="Name"
+                                    SelectedValuePath="Id"/>
+
+                            <TextBox x:Name="NewReviewText" 
+                                   Height="100" 
+                                   Margin="0,0,0,10"
+                                   TextWrapping="Wrap"
+                                   AcceptsReturn="True"/>
+
+                            <Button Content="Опублікувати відгук" 
+                                    HorizontalAlignment="Right"
+                                    Click="AddReview_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
